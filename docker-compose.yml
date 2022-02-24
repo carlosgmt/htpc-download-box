@@ -96,7 +96,7 @@ services:
 
   plex-server:
     container_name: plex-server
-    image: linuxserver/plex:${PLEXPLATFORM}
+    image: linuxserver/plex:${PLEXTAG}
     restart: unless-stopped
     network_mode: ${NETWORKMODE}
     environment:
