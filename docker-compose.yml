@@ -30,7 +30,24 @@ services:
     #ports:
     #  - 8112:8112
     #  - 5846:5846
-
+   
+   transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - ${TZ} # timezone, defined in .env
+    volumes:
+      - /dockermounts/transmission:/config
+      - /library/downloads:/downloads
+       - /dockermounts/transmission/watch:/watch # Si quieres un directiorio al que añadir archivos .torrent
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
+ 
   jackett:
     container_name: jackett
     image: linuxserver/jackett:latest
