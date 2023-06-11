@@ -15,39 +15,22 @@ services:
     #  - 8112:8112 # port for deluge web UI to be reachable from local network
     #command: '-f "" -r 192.168.1.0/24' # enable firewall and route local network traffic
 
-  #deluge:
-    #container_name: deluge
-    #image: linuxserver/deluge:latest
-    #restart: unless-stopped
-    #network_mode: ${NETWORKMODE}
-    #environment:
-    #  - PUID=${PUID} # default user id, defined in .env
-    #  - PGID=${PGID} # default group id, defined in .env
-    #  - TZ=${TZ} # timezone, defined in .env
-    #volumes:
-    #  - ${ROOTHDD}/downloads:/downloads # downloads folder
-    #  - ${ROOT}/config/deluge:/config # config files
-    #ports:
-    #  - 8112:8112
-    #  - 5846:5846
-   
-   transmission:
-    image: lscr.io/linuxserver/transmission:latest
-    container_name: transmission
-    environment:
-      - PUID=1001
-      - PGID=1001
-      - ${TZ} # timezone, defined in .env
-    volumes:
-      - /dockermounts/transmission:/config
-      - /library/downloads:/downloads
-       - /dockermounts/transmission/watch:/watch # Si quieres un directiorio al que añadir archivos .torrent
-    ports:
-      - 9091:9091
-      - 51413:51413
-      - 51413:51413/udp
+  deluge:
+    container_name: deluge
+    image: linuxserver/deluge:latest
     restart: unless-stopped
- 
+    network_mode: ${NETWORKMODE}
+    environment:
+      - PUID=${PUID} # default user id, defined in .env
+      - PGID=${PGID} # default group id, defined in .env
+      - TZ=${TZ} # timezone, defined in .env
+    volumes:
+      - ${ROOTHDD}/downloads:/downloads # downloads folder
+      - ${ROOT}/config/deluge:/config # config files
+    ports:
+      - 8112:8112
+      - 5846:5846
+   
   jackett:
     container_name: jackett
     image: linuxserver/jackett:latest
@@ -89,7 +72,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${ROOT}/config/sonarr:/config # config files
-      - ${ROOTHDD}/complete/tv:/tv # tv shows folder
+      - ${ROOTHDD}/TV-Shows:/tv # tv shows folder
       - ${ROOTHDD}/downloads:/downloads # download folder
     ports:
       - 8989:8989
@@ -106,7 +89,7 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${ROOT}/config/radarr:/config # config files
-      - ${ROOTHDD}/complete/movies:/movies # movies folder
+      - ${ROOTHDD}/Movies:/movies # movies folder
       - ${ROOTHDD}/downloads:/downloads # download folder
     ports:
       - 7878:7878
@@ -138,7 +121,7 @@ services:
       - UMASK_SET=022 #optional
     volumes:
       - ${ROOT}/config/bazarr:/config # config files
-      - ${ROOTHDD}/complete/movies:/movies # movies folder
+      - ${ROOTHDD}/Movies:/movies # movies folder
       - ${ROOTHDD}/complete/tv:/tv # tv shows folder
     ports:
       - 6767:6767
@@ -168,8 +151,8 @@ services:
       - TZ=${TZ} # timezone, defined in .env
     volumes:
       - ${ROOT}/config/lidarr:/config # config files
-      - ${ROOTHDD}/complete/music:/music # music folder
-      - ${ROOTHDD}/downloads:/downloads # download shows folder
+      - /media/Media-Server/Music:/music # music folder
+      - media/Media-Server/Music/downloads:/downloads # download shows folder
     ports:
       - 8686:8686
       
@@ -184,7 +167,7 @@ services:
       - TZ=${TZ} # timezone, defined in .env
     volumes:
       - ${ROOT}/config/readarr:/config # config files
-      - ${ROOTHDD}/complete/books:/books # music folder
-      - ${ROOTHDD}/downloads:/downloads # download shows folder
+      - /media/Media-Server/Books:/books # music folder
+      - /media/Media-Server/Books/downloads:/downloads # download shows folder
     ports:
       - 8787:8787
