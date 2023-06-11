@@ -152,7 +152,7 @@ services:
     volumes:
       - ${ROOT}/config/lidarr:/config # config files
       - /media/Media-Server/Music:/music # music folder
-      - media/Media-Server/Music/downloads:/downloads # download shows folder
+      - /media/Media-Server/Music/downloads:/downloads # download shows folder
     ports:
       - 8686:8686
       
