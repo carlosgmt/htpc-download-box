@@ -15,21 +15,21 @@ services:
     #  - 8112:8112 # port for deluge web UI to be reachable from local network
     #command: '-f "" -r 192.168.1.0/24' # enable firewall and route local network traffic
 
-  deluge:
-    container_name: deluge
-    image: linuxserver/deluge:latest
-    restart: unless-stopped
-    network_mode: ${NETWORKMODE}
-    environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
-    volumes:
-      - ${ROOTHDD}/downloads:/downloads # downloads folder
-      - ${ROOT}/config/deluge:/config # config files
-    ports:
-      - 8112:8112
-      - 5846:5846
+  #deluge:
+    #container_name: deluge
+    #image: linuxserver/deluge:latest
+    #restart: unless-stopped
+    #network_mode: ${NETWORKMODE}
+    #environment:
+    #  - PUID=${PUID} # default user id, defined in .env
+    #  - PGID=${PGID} # default group id, defined in .env
+    #  - TZ=${TZ} # timezone, defined in .env
+    #volumes:
+    #  - ${ROOTHDD}/downloads:/downloads # downloads folder
+    #  - ${ROOT}/config/deluge:/config # config files
+    #ports:
+    #  - 8112:8112
+    #  - 5846:5846
 
   jackett:
     container_name: jackett
@@ -101,10 +101,11 @@ services:
     network_mode: ${NETWORKMODE}
     environment:
       - TZ=${TZ} # timezone, defined in .env
+      - PUID=1001
+      - PGID=1001
     volumes:
-      - ${ROOT}/config/plex/db:/config # plex database
-      - ${ROOTHDD}/plextranscode:/transcode # temp transcoded files
-      - ${ROOTHDD}/complete:/data # media library
+      - /dockermounts/plex:/config # plex database
+      - /media/Media-Server:/library # media library
     ports:
       - 32400:32400
 
