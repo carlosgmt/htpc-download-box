@@ -94,20 +94,20 @@ services:
     ports:
       - 7878:7878
 
-  plex-server:
-    container_name: plex-server
-    image: linuxserver/plex:${PLEXTAG}
-    restart: unless-stopped
-    network_mode: ${NETWORKMODE}
-    environment:
-      - TZ=${TZ} # timezone, defined in .env
-      - PUID=1001
-      - PGID=1001
-    volumes:
-      - /dockermounts/plex:/config # plex database
-      - /media/Media-Server:/library # media library
-    ports:
-      - 32400:32400
+  #plex-server:
+  #  container_name: plex-server
+  #  image: linuxserver/plex:${PLEXTAG}
+  #  restart: unless-stopped
+  #  network_mode: ${NETWORKMODE}
+  #  environment:
+  #    - TZ=${TZ} # timezone, defined in .env
+  #    - PUID=1001
+  #    - PGID=1001
+  #  volumes:
+  #    - /dockermounts/plex:/config # plex database
+  #    - /media/Media-Server:/library # media library
+  #  ports:
+  #    - 32400:32400
 
   bazarr:
     container_name: bazarr
